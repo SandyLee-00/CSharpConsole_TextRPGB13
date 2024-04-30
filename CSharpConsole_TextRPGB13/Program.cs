@@ -90,6 +90,7 @@ namespace TextRPG
         {
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
+            // 브랜치 테스트 
         }
     }
 }
