@@ -26,5 +26,11 @@ namespace TextRPG
             Hp = hp;
             Gold = gold;
         }
+
+        // TODO :
+        public String GetInfo()
+        {
+            return "";
+        }
     }
 }
