@@ -5,7 +5,7 @@ namespace TextRPG
     public class GameManager
     {
         private Player player;
-
+        private List<Monster> monsters;
 
         public GameManager()
         {
@@ -37,16 +37,20 @@ namespace TextRPG
             Console.WriteLine("");
 
             Console.WriteLine("1. 상태보기");
+            Console.WriteLine("2. 전투 시작");
             Console.WriteLine("");
 
             // 2. 선택한 결과를 검증함
-            int choice = Utility.PromptMenuChoice(1, 1);
+            int choice = Utility.PromptMenuChoice(1, 2);
 
             // 3. 선택한 결과에 따라 보내줌
             switch (choice)
             {
                 case 1:
                     StatusMenu();
+                    break;
+                case 2:
+                    BattleStartMenu();
                     break;
                 
             }
@@ -81,8 +85,72 @@ namespace TextRPG
                     break;
             }
         }
+        private void BattleStartMenu()
+        {
+            Console.Clear();
+            Utility.ShowTitle("■ Battle!! 3. 전투 시작 ■");
+            Console.WriteLine("");
+            
+            // TODO : 몬스터 정보 출력
+            /*foreach (Monster monster in monsters)
+            {
+                Console.WriteLine($"{monster.GetInfo()}");
+            }*/
 
+            Console.WriteLine("");
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"{player.GetInfo()}");
+            Console.WriteLine("");
+
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("1. 공격");
+            Console.WriteLine("");
+
+            switch (Utility.PromptMenuChoice(0, 1))
+            {
+                case 0:
+                    MainMenu();
+                    break;
+                case 1:
+                    BattleMenu();
+                    break;
+            }
+        }
+
+        public void BattleMenu()
+        {
+            Console.Clear();
+            Utility.ShowTitle("■ Battle!! 3 - 1. 공격 ■");
+            Console.WriteLine("");
+
+            int count = 1;
+
+            // TODO : 몬스터 정보 출력
+            /*foreach (Monster monster in monsters)
+            {
+                Console.WriteLine($"{count++} {monster.GetInfo()}");
+            }*/
+
+            Console.WriteLine("");
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"{player.GetInfo()}");
+            Console.WriteLine("");
+
+            Console.WriteLine("0. 취소");
+
+            // TODO : 몬스터 선택
+            switch (Utility.PromptMenuChoice(0, 1))
+            {
+                case 0:
+                    MainMenu();
+                    break;
+                case 1:
+                    BattleMenu();
+                    break;
+            }
+        }
     }
+    
 
     public class Program
     {
@@ -90,7 +158,6 @@ namespace TextRPG
         {
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
-            // 브랜치 테스트 
         }
     }
 }

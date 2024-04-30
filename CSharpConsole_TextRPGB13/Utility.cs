@@ -13,7 +13,8 @@ namespace TextRPG
         {
             while (true)
             {
-                Console.Write("원하시는 번호를 입력해주세요: ");
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.WriteLine(">>");
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {
                     return choice;
