@@ -15,6 +15,12 @@ namespace TextRPG
         private void InitializeGame()
         {
             player = new Player("Jiwon", "Programmer", 1, 10, 5, 100, 15000);
+            monsters = new List<Monster>()
+            {
+                new Monster(1, 2, "미니언", 15, true),
+                new Monster(2, 5, "대포미니언", 25, true),
+                new Monster(3, 3, "공허충", 10, true)
+            };
         }
 
         public void StartGame()
@@ -52,7 +58,7 @@ namespace TextRPG
                 case 2:
                     BattleStartMenu();
                     break;
-                
+
             }
             MainMenu();
         }
@@ -70,7 +76,7 @@ namespace TextRPG
 
             Utility.PrintTextHighlights("공격력 : ", (player.Atk).ToString());
             Utility.PrintTextHighlights("방어력 : ", (player.Def).ToString());
-            Utility.PrintTextHighlights("체 력 : ", (player.Hp).ToString());
+            Utility.PrintTextHighlights("체 력 : ", (player.HP).ToString());
 
             Utility.PrintTextHighlights("Gold : ", player.Gold.ToString());
             Console.WriteLine("");
@@ -90,12 +96,12 @@ namespace TextRPG
             Console.Clear();
             Utility.ShowTitle("■ Battle!! 3. 전투 시작 ■");
             Console.WriteLine("");
-            
+
             // TODO : 몬스터 정보 출력
-            /*foreach (Monster monster in monsters)
+            foreach (Monster monster in monsters)
             {
                 Console.WriteLine($"{monster.GetInfo()}");
-            }*/
+            }
 
             Console.WriteLine("");
             Console.WriteLine("[내정보]");
@@ -125,11 +131,10 @@ namespace TextRPG
 
             int count = 1;
 
-            // TODO : 몬스터 정보 출력
-            /*foreach (Monster monster in monsters)
+            foreach (Monster monster in monsters)
             {
                 Console.WriteLine($"{count++} {monster.GetInfo()}");
-            }*/
+            }
 
             Console.WriteLine("");
             Console.WriteLine("[내정보]");
@@ -138,19 +143,96 @@ namespace TextRPG
 
             Console.WriteLine("0. 취소");
 
-            // TODO : 몬스터 선택
-            switch (Utility.PromptMenuChoice(0, 1))
+            switch (Utility.PromptMenuChoice(0, count))
             {
                 case 0:
                     MainMenu();
                     break;
                 case 1:
-                    BattleMenu();
+                    if (monsters[0] != null && monsters[0].IsAlive)
+                    {
+                        BattlePlayerAttack(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                    break;
+                case 2:
+                    if (monsters[1] != null && monsters[1].IsAlive)
+                    {
+                        BattlePlayerAttack(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                    break;
+                case 3:
+                    if (monsters[2] != null && monsters[2].IsAlive)
+                    {
+                        BattlePlayerAttack(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
                     break;
             }
+
+        }
+        public void BattlePlayerAttack(int monsterNumber)
+        {
+            int damage = player.GetPlayerAttackDamage(monsters[0]);
+
+            Console.Clear();
+            Utility.ShowTitle("■ Battle!! 3 - 1. 플레이어의 공격 ■");
+            Console.WriteLine("");
+
+            Console.WriteLine($"{player.Name} 의 공격!");
+            Console.WriteLine($"Lv.{monsters[monsterNumber].Level} {monsters[monsterNumber].Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
+            Console.WriteLine("");
+
+
+            Console.WriteLine($"Lv.{monsters[monsterNumber].Level} {monsters[monsterNumber].Name}");
+            Console.Write($"HP {monsters[monsterNumber].HP} -> ");
+            if (monsters[monsterNumber].HP <= damage)
+            {
+                monsters[monsterNumber].HP = 0;
+                monsters[monsterNumber].IsAlive = false;
+                Console.WriteLine("Dead");
+            }
+            else
+            {
+                monsters[monsterNumber].HP -= damage;
+                Console.WriteLine(monsters[monsterNumber].HP);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("0. 다음");
+            Console.WriteLine("");
+            switch (Utility.PromptMenuChoice(0, 0))
+            {
+                case 0:
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.IsAlive)
+                        {
+                            // BattleMonsterAttack();
+                        }
+                    }
+                    
+                    break;
+            }
+
+        }
+
+        public void BattleMonsterAttack(int monsterNumber)
+        {
+            
         }
     }
-    
+
 
     public class Program
     {
