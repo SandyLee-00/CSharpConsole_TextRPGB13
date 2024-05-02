@@ -4,7 +4,7 @@ namespace TextRPG
     // TODO :
     public class Monster
     {
-        public Monster(int id, int level, string name, int maxHP, bool isAlive)
+        public Monster(int id, int level, string name, int maxHP, bool isAlive, int atk)
         {
             Id = id;
             Level = level;
@@ -12,6 +12,7 @@ namespace TextRPG
             MaxHP = maxHP;
             HP = MaxHP;
             IsAlive = isAlive;
+            Atk = atk;
         }
 
         public String GetInfo()
@@ -34,6 +35,7 @@ namespace TextRPG
         public int MaxHP { get; set; }
         public int HP { get; set; }
         public bool IsAlive { get; set; }
+        public int Atk { get; }
 
 
     }

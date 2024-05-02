@@ -14,7 +14,7 @@ namespace TextRPG
         public int Atk { get; }
         public int Def { get; }
         public int MaxHP { get; }
-        public int HP { get; }
+        public int HP { get; set; }
         public int Gold { get; set; }
 
         public Player(string name, string job, int level, int atk, int def, int maxHP, int gold)
