@@ -13,24 +13,36 @@ namespace TextRPG
         public int Level { get; }
         public int Atk { get; }
         public int Def { get; }
-        public int Hp { get; }
+        public int MaxHP { get; }
+        public int HP { get; set; }
         public int Gold { get; set; }
 
-        public Player(string name, string job, int level, int atk, int def, int hp, int gold)
+        public Player(string name, string job, int level, int atk, int def, int maxHP, int gold)
         {
             Name = name;
             Job = job;
             Level = level;
             Atk = atk;
             Def = def;
-            Hp = hp;
+            MaxHP = maxHP;
+            HP = MaxHP;
             Gold = gold;
         }
 
-        // TODO :
         public String GetInfo()
         {
-            return "";
+            string ret = $"Lv.{Level} {Name} ({Job})\n";
+            ret += $"HP : {HP} / {MaxHP}\n";
+            return ret;
+        }
+
+        public int GetPlayerAttackDamage(Monster monster)
+        {
+            Random rand = new Random();
+            int damage = Atk;
+            double diff = rand.NextDouble() * 0.2f - 0.1f;
+            damage = (int)Math.Ceiling(damage + damage * diff);
+            return damage;
         }
     }
 }
