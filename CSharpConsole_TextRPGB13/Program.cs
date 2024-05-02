@@ -143,6 +143,7 @@ namespace TextRPG
 
             Console.WriteLine("0. 나가기");
 
+            // TODO : 잘못된 입력했을 때 보이게 하기
             switch (Utility.PromptMenuChoice(0, count))
             {
                 case 0:
