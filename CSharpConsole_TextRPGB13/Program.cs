@@ -18,9 +18,9 @@ namespace TextRPG
             player = new Player("서영", "광합성이필요해", 1, 10, 5, 100, 15000);
             monsters = new List<Monster>()
             {
-                new Monster(1, 2, "미니언", 15, true, 1),
-                new Monster(2, 5, "대포미니언", 25, true, 2),
-                new Monster(3, 3, "공허충", 10, true, 5)
+                new Monster(1, 10, "B반 미카엘 대천사 혁매", 15, true, 5),
+                new Monster(2, 11, "공포의 TIL 쓰셨나요? 진매", 25, true, 9),
+                new Monster(3, 20, "북미서버 챌린저 / 한국서버 다이아 후다닭", 36, true, 8)
             };
         }
 
