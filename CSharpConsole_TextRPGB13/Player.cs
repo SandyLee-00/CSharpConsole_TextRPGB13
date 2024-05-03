@@ -36,7 +36,7 @@ namespace TextRPG
             return ret;
         }
 
-        public int GetPlayerAttackDamage(Monster monster)
+        public int GetPlayerAttackDamage()
         {
             Random rand = new Random();
             int damage = Atk;
