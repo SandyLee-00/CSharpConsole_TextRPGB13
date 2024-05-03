@@ -1,4 +1,4 @@
-namespace CSharpConsole_TextRPGB13.Util;
+namespace B13_SpartaDungeon.Util;
 
 public static class CustomConsole
 {
@@ -41,7 +41,7 @@ public static class CustomConsole
     public static void WriteWithColor(string content, ConsoleColor consoleColor)
     {
         Console.ForegroundColor = consoleColor;
-        Console.Write(content);
+        Console.WriteLine(content);
         Console.ForegroundColor = PRIMARY_COLOR;
     }
 
@@ -86,16 +86,6 @@ public static class CustomConsole
         Console.ForegroundColor = PRIMARY_COLOR;
     }
 
-    public static void ConsoleClearByLine(int lineFromBottom)
-    {
-        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
-        for (var i = 0; i < Console.WindowWidth * 2; i++)
-        {
-            Console.Write(' ');
-        }
-        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
-    }
-
     private static int GetPrintableLength(string str)
     {
         var length = 0;
@@ -120,25 +110,38 @@ public static class CustomConsole
         var padding = totalLength - currentLength;
         return str.PadRight(str.Length + padding);
     }
-    
-    internal static void ShowTitle(string title)
+
+    public static void ConsoleClearByLine(int lineFromBottom)
     {
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine(title);
-        Console.ResetColor();
+        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
+        for (var i = 0; i < Console.WindowWidth * lineFromBottom; i++)
+        {
+            Console.Write(' ');
+        }
+        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
     }
 
     public static int PromptMenuChoice(int min, int max)
     {
+        var isInputCorrect = true;
         while (true)
         {
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.WriteLine(">>");
+            Console.Write(">> ");
+
             if (int.TryParse(Console.ReadLine(), out var choice) && choice >= min && choice <= max)
             {
                 return choice;
             }
-            Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+
+            if (isInputCorrect)
+            {
+                isInputCorrect = false;
+                Console.WriteLine();
+            }
+
+            ConsoleClearByLine(3);
+            WriteLineWithColor("잘못된 입력입니다.", ERROR_COLOR);
         }
     }
 }

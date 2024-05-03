@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpConsole_TextRPGB13", "CSharpConsole_TextRPGB13\CSharpConsole_TextRPGB13.csproj", "{0ACFACF2-A582-462D-BE88-1E412E05FC92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B13_SpartaDungeon", "B13_SpartaDungeon\B13_SpartaDungeon.csproj", "{0ACFACF2-A582-462D-BE88-1E412E05FC92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

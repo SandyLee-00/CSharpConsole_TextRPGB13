@@ -1,4 +1,4 @@
-namespace CSharpConsole_TextRPGB13.Util;
+namespace B13_SpartaDungeon.Util;
 
 public class AlertMessage
 {
