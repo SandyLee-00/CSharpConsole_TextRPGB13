@@ -1,10 +1,9 @@
-﻿namespace CSharpConsole_TextRPGB13
+namespace CSharpConsole_TextRPGB13;
+
+internal static class Program
 {
-    internal class Program
+    private static void Main()
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
-        }
+        
     }
 }
