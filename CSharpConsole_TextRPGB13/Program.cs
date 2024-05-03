@@ -133,7 +133,14 @@ namespace TextRPG
 
             foreach (Monster monster in monsters)
             {
-                Console.WriteLine($"[{count++}] {monster.GetInfo()}");
+                if (monster.IsAlive)
+                {
+                    Console.WriteLine($"[{count++}] {monster.GetInfo()}");
+                }
+                else
+                {
+                    Utility.PrintTextGray($"[{count++}] {monster.GetInfo()}");
+                }
             }
 
             Console.WriteLine("");
@@ -237,8 +244,6 @@ namespace TextRPG
             }
 
         }
-
-
 
         public void BattleMonsterAttack(Monster monster)
         {
