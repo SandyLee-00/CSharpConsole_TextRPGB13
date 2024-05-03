@@ -38,5 +38,12 @@ namespace TextRPG
             Console.ResetColor();
             Console.WriteLine(s3);
         }
+
+        public static void PrintTextGray(string s1)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(s1);
+            Console.ResetColor();
+        }
     }
 }
