@@ -191,7 +191,7 @@ namespace TextRPG
         }
         public void BattlePlayerAttack(int monsterNumber)
         {
-            int damage = player.GetPlayerAttackDamage(monsters[0]);
+            int damage = player.GetPlayerAttackDamage();
 
             Console.Clear();
             Utility.ShowTitle("■ Battle!! 3 - 1. 플레이어의 공격 ■");
