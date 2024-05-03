@@ -8,31 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a391763-349c-4240-a11a-2acb8a136f9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/GameObjects/Monster.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/GameObjects/Player.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Manager/GameManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Battle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Interfaces/Menu.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Intro.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Lobby.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/PlayerStatus.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Util/SceneAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13.sln" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/CSharpConsole_TextRPGB13.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/B13_SpartaDungeon.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Game/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Game/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/GameObjects/Monster.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/GameObjects/Player.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Scene/CharacterInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Scene/HuntingGround.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Scene/Interfaces/Scene.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Scene/Intro.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Scene/Main.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Util/AlertMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Util/AlertMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpConsole_TextRPGB13/Util/CustomConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Util/CustomConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharpConsole_TextRPGB13/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/B13_SpartaDungeon/GameObjects/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/GameObjects/Monster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/B13_SpartaDungeon/Scene/Battle.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +105,7 @@
       <updated>1714629484283</updated>
       <workItem from="1714629485426" duration="450000" />
       <workItem from="1714645995027" duration="1712000" />
-      <workItem from="1714698174368" duration="31815000" />
+      <workItem from="1714698174368" duration="32383000" />
     </task>
     <servers />
   </component>

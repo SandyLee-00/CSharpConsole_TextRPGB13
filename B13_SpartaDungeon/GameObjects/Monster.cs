@@ -38,12 +38,13 @@ public class Monster
         return ret;
     }
 
-    // 몬스터 랜덤 생성(1~4마리)
-    public static void RandomGenerate()
+    // 몬스터 생성
+    public static void Generate()
     {
-        var randomLoopCount = new Random().Next(1, 5);
+        var randomLoopCount = new Random().Next(1, 5);  // 1~4마리 랜덤으로 생성
         for (var i = 0; i < randomLoopCount; i++)
         {
+            // 순서 랜덤 표시
             var randomIndex = new Random().Next(0, 3);
             CustomConsole.WriteLine(GameManager.Instance.Monster[randomIndex].GetInfo());
         }
