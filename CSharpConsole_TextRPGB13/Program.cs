@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TextRPG
@@ -18,9 +19,9 @@ namespace TextRPG
             player = new Player("서영", "광합성이필요해", 1, 10, 5, 100, 15000);
             monsters = new List<Monster>()
             {
-                new Monster(1, 10, "B반 미카엘 대천사 혁매", 15, true, 5),
-                new Monster(2, 11, "공포의 TIL 쓰셨나요? 진매", 25, true, 9),
-                new Monster(3, 20, "북미서버 챌린저 / 한국서버 다이아 후다닭", 36, true, 8)
+                new Monster(1, 10, "B반 미카엘 대천사 혁매", 10, true, 5),
+                new Monster(2, 11, "공포의 TIL 쓰셨나요? 진매", 20, true, 9),
+                new Monster(3, 20, "북미서버 챌린저 / 한국서버 다이아 후다닭", 15, true, 8)
             };
         }
 
@@ -362,6 +363,6 @@ HP 100 -> 74
         {
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
+            }
         }
     }
-}
