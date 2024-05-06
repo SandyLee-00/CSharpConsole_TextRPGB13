@@ -1,3 +1,5 @@
+using B13_SpartaDungeon.Scene;
+
 namespace B13_SpartaDungeon.GameObjects;
 
 public class Player
@@ -26,16 +28,17 @@ public class Player
     public void Hit(ref List<Monster> targetMonster, int targetMonsterNumber)
     {
         var attackDamage = GetPlayerAttackDamage();
-        var targetMonsterHp = targetMonster[targetMonsterNumber - 1].Hp;
-        if (targetMonsterHp - attackDamage <= 0)
+        var monster = targetMonster[targetMonsterNumber - 1];
+        if (monster.Hp - attackDamage <= 0)
         {
-            targetMonster[targetMonsterNumber - 1].Hp = 0;
-            targetMonster[targetMonsterNumber - 1].IsAlive = false;
+            monster.Hp = 0;
+            monster.IsAlive = false;
         }
         else
         {
-            targetMonster[targetMonsterNumber - 1].Hp -= attackDamage;
+            monster.Hp -= attackDamage;
         }
+        targetMonster[targetMonsterNumber - 1] = monster;
     }
 
     public string GetInfo()

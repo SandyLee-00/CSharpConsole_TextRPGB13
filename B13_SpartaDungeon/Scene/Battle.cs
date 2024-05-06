@@ -9,7 +9,7 @@ public class Battle : IScene
 {
     public static Battle Instance { get; } = new();
 
-    private List<Monster> _monsters = null!;
+    private List<Monster> _monsters = new(capacity: 4);
 
     public bool IsBattleStart = false;
     public int IsBattleAttemptCount;
@@ -51,7 +51,7 @@ public class Battle : IScene
         {
             GameManager.Instance.Player.Hit(ref _monsters, monsterNumber);
         }
-        
+
         CustomConsole.Clear();
         CustomConsole.WriteLineWithColor("Battle!! - 플레이어 차례", ConsoleColor.Red);
         Console.WriteLine();

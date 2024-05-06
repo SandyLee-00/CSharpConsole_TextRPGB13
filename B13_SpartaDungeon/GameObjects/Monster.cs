@@ -4,7 +4,7 @@ using B13_SpartaDungeon.Util;
 
 namespace B13_SpartaDungeon.GameObjects;
 
-public class Monster
+public struct Monster
 {
     public int Id { get; set; }
     public int Level { get; set; }
@@ -42,15 +42,15 @@ public class Monster
     // 몬스터 생성
     public static List<Monster> GetListByRandom()
     {
-        var randomMonsters = new List<Monster>();
-        var randomLoopCount = new Random().Next(1, 5); // 1~4마리 랜덤으로 생성
+        List<Monster> randomMonsters = new();
+        var random = new Random();
+        var randomLoopCount = random.Next(1, 5); // 1~4마리 랜덤으로 생성
         for (var i = 0; i < randomLoopCount; i++)
         {
             // 순서 랜덤 표시
-            var randomIndex = new Random().Next(0, 3);
+            var randomIndex = random.Next(0, 3);
             randomMonsters.Add(GameManager.Instance.Monster[randomIndex]);
         }
-
         return randomMonsters;
     }
 

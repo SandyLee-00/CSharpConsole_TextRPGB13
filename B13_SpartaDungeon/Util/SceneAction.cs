@@ -1,4 +1,3 @@
-using B13_SpartaDungeon.GameObjects;
 using B13_SpartaDungeon.Manager;
 using B13_SpartaDungeon.Scene;
 
@@ -47,7 +46,5 @@ public static class SceneAction
     };
 
     // 사냥터(몬스터 차례) 선택지 액션
-    public static readonly Dictionary<int, Action> BattleMonsterTurn = new()
-    {
-    };
+    public static readonly Dictionary<int, Action> BattleMonsterTurn = new();
 }
