@@ -33,8 +33,8 @@ public class Battle : IScene
         Console.WriteLine();
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
-        CustomConsole.WriteLine("0. 도망");
-        CustomConsole.WriteLine("1. 공격");
+        CustomConsole.WriteLine("0. 도망가기");
+        CustomConsole.WriteLine("1. 공격하기");
         Console.WriteLine();
 
         #endregion
@@ -72,7 +72,7 @@ public class Battle : IScene
         Console.WriteLine();
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
-        CustomConsole.WriteLine("0. 도망");
+        CustomConsole.WriteLine("0. 도망가기");
         Console.WriteLine();
 
         SceneAction.BattlePlayerTurn[CustomConsole.PromptMenuChoice(0,
@@ -84,17 +84,26 @@ public class Battle : IScene
 
     private void PlayerAttackInfo(int monsterIndex)
     {
+        var monster = RandomMonsters[monsterIndex - 1];
+
         CustomConsole.Clear();
         CustomConsole.WriteLineWithColor("Battle!! - 플레이어 공격 정보", CustomConsole.COLOR_TITLE);
         Console.WriteLine();
         CustomConsole.WriteLine($"{GameManager.Instance.Player.Name} 의 공격!");
         CustomConsole.Write(
-            $"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name} 을(를) 맞췄습니다.   ");
+            $"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.   ");
         CustomConsole.WriteLine($"[데미지: {_playerAttackDamage}]");
         Console.WriteLine();
-        CustomConsole.WriteLine($"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name}");
-        CustomConsole.WriteLine(
-            $"HP {RandomMonsters[monsterIndex - 1].Hp + _playerAttackDamage} -> {RandomMonsters[monsterIndex - 1].Hp}");
+        CustomConsole.WriteLine($"Lv.{monster.Level} {monster.Name}");
+        if (monster.Hp > 0)
+        {
+            CustomConsole.WriteLine($"HP {monster.Hp + _playerAttackDamage} -> {monster.Hp}");
+        }
+        else
+        {
+            CustomConsole.Write($"HP {monster.Hp + _playerAttackDamage} -> ");
+            CustomConsole.WriteLineWithColor("DEAD", ConsoleColor.Gray);
+        }
         Console.WriteLine();
         CustomConsole.WriteLine("0. 다음");
         Console.WriteLine();

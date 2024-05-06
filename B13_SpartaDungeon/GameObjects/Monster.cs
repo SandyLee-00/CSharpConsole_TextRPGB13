@@ -34,7 +34,7 @@ public struct Monster
         }
         else
         {
-            ret += " Dead";
+            ret += " DEAD";
         }
         return ret;
     }
