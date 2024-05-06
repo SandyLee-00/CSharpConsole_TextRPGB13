@@ -9,88 +9,173 @@ public class Battle : IScene
 {
     public static Battle Instance { get; } = new();
 
-    private List<Monster> _monsters = new(capacity: 4);
+    public List<Monster> RandomMonsters = new(capacity: 4);
 
     public bool IsBattleStart = false;
     public int IsBattleAttemptCount;
 
+    private int _playerAttackDamage;
+    public int PlayerOriginalHp;
+
     public void PrintScene()
     {
+        Init();
+
+        #region 전투 씬 출력
+
         CustomConsole.Clear();
-        if (!IsBattleStart && IsBattleAttemptCount == 0)
-        {
-            CustomConsole.TwinkleWriteLine("Battle!!", ConsoleColor.Red);
-            _monsters = Monster.GetListByRandom();
-        }
-        else
-        {
-            CustomConsole.WriteLineWithColor("Battle!!", ConsoleColor.Red);
-        }
+        CustomConsole.WriteLineWithColor("Battle!!", CustomConsole.COLOR_TITLE);
         Console.WriteLine();
 
-        Monster.Generate(_monsters);
-        Console.WriteLine();
+        RandomMonsters = Monster.GetListByRandom();
 
+        Monster.Generate(RandomMonsters);
+        Console.WriteLine();
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
-
         CustomConsole.WriteLine("0. 도망");
         CustomConsole.WriteLine("1. 공격");
         Console.WriteLine();
 
-        var choice = CustomConsole.PromptMenuChoice(0, 1);
+        #endregion
 
-        SceneAction.BattleActions[choice]();
+        SceneAction.BattleActions[CustomConsole.PromptMenuChoice(0, 1)]();
 
         Console.WriteLine();
     }
 
-    public void BattlePlayerTurn(int monsterNumber = 0)
+    public void PlayerAttackTurn(int monsterIndex = 0)
     {
-        if (monsterNumber != 0)
+        if (monsterIndex == 0)
         {
-            GameManager.Instance.Player.Hit(ref _monsters, monsterNumber);
+            for (var i = 1; i <= RandomMonsters.Count; i++)
+            {
+                var index = i;
+                SceneAction.BattlePlayerTurn[i] = () => PlayerAttackTurn(monsterIndex: index);
+            }
+        }
+        else
+        {
+            GameManager.Instance.Player.Hit(ref RandomMonsters, monsterIndex, ref _playerAttackDamage);
+            var monsterDeathCount = RandomMonsters.Count(monster => !monster.IsAlive);
+            if (monsterDeathCount == RandomMonsters.Count)
+            {
+                BattleResultPlayerWin();
+            }
+            PlayerAttackInfo(monsterIndex);
         }
 
         CustomConsole.Clear();
-        CustomConsole.WriteLineWithColor("Battle!! - 플레이어 차례", ConsoleColor.Red);
+        CustomConsole.WriteLineWithColor("Battle!! - 플레이어 공격 차례", CustomConsole.COLOR_TITLE);
         Console.WriteLine();
-
-        Monster.Generate(_monsters);
+        Monster.Generate(RandomMonsters);
         Console.WriteLine();
-
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
-
-        CustomConsole.WriteLine("0. 취소");
+        CustomConsole.WriteLine("0. 도망");
         Console.WriteLine();
 
-        if (monsterNumber == 0)
-        {
-            for (var i = 1; i <= _monsters.Count; i++)
-            {
-                var number = i;
-                SceneAction.BattlePlayerTurn[i] = () => BattlePlayerTurn(monsterNumber: number);
-            }
-        }
-
-
-        var choice = CustomConsole.PromptMenuChoice(0, _monsters.Count);
-
-        SceneAction.BattlePlayerTurn[choice]();
+        SceneAction.BattlePlayerTurn[CustomConsole.PromptMenuChoice(0,
+            RandomMonsters.Count,
+            message: ChoiceMessage.TARGET)]();
 
         Console.WriteLine();
     }
 
-    public void BattleMonsterAttack()
+    private void PlayerAttackInfo(int monsterIndex)
     {
+        CustomConsole.Clear();
+        CustomConsole.WriteLineWithColor("Battle!! - 플레이어 공격 정보", CustomConsole.COLOR_TITLE);
+        Console.WriteLine();
+        CustomConsole.WriteLine($"{GameManager.Instance.Player.Name} 의 공격!");
+        CustomConsole.Write(
+            $"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name} 을(를) 맞췄습니다.   ");
+        CustomConsole.WriteLine($"[데미지: {_playerAttackDamage}]");
+        Console.WriteLine();
+        CustomConsole.WriteLine($"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name}");
+        CustomConsole.WriteLine(
+            $"HP {RandomMonsters[monsterIndex - 1].Hp + _playerAttackDamage} -> {RandomMonsters[monsterIndex - 1].Hp}");
+        Console.WriteLine();
+
+        switch (CustomConsole.PromptMenuChoice(0, 0))
+        {
+            case 0:
+                MonsterAttackTurn();
+                break;
+        }
+    }
+
+    private void MonsterAttackTurn()
+    {
+        foreach (var monster in RandomMonsters.Where(monster => monster.IsAlive))
+        {
+            monster.Hit(player: GameManager.Instance.Player);
+            CustomConsole.Clear();
+            CustomConsole.WriteLineWithColor("Battle!! - 몬스터 공격 차례", CustomConsole.COLOR_TITLE);
+            Console.WriteLine();
+            CustomConsole.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
+            CustomConsole.Write($"{GameManager.Instance.Player.Name} 을(를) 맞췄습니다.   ");
+            CustomConsole.WriteLine($"[데미지: {monster.Attack}]");
+            Console.WriteLine();
+
+            switch (CustomConsole.PromptMenuChoice(0, 0))
+            {
+                case 0:
+                    if (GameManager.Instance.Player.Hp <= 0)
+                    {
+                        BattleResultPlayerLose();
+                    }
+                    continue;
+            }
+        }
     }
 
     public void BattleResultPlayerWin()
     {
+        CustomConsole.Clear();
+        CustomConsole.WriteLineWithColor("Battle!! - Result", CustomConsole.COLOR_TITLE);
+        Console.WriteLine();
+        CustomConsole.WriteLineWithColor("Victory", ConsoleColor.DarkGreen);
+        Console.WriteLine();
+        CustomConsole.WriteLine($"던전에서 몬스터 {RandomMonsters.Count}마리를 잡았습니다.");
+        Console.WriteLine();
+        CustomConsole.WriteLine($"Lv.{GameManager.Instance.Player.Level} {GameManager.Instance.Player.Name}");
+        CustomConsole.WriteLine($"Hp {PlayerOriginalHp} -> {GameManager.Instance.Player.Name}");
+        Console.WriteLine();
+        CustomConsole.WriteLine("0. 다음");
+        Console.WriteLine();
+
+        switch (CustomConsole.PromptMenuChoice(0, 0))
+        {
+            case 0:
+                Main.Instance.PrintScene();
+                break;
+        }
     }
 
     public void BattleResultPlayerLose()
     {
+        CustomConsole.Clear();
+        CustomConsole.WriteLineWithColor("Battle!! - Result", CustomConsole.COLOR_TITLE);
+        Console.WriteLine();
+        CustomConsole.WriteLineWithColor("You Lose", ConsoleColor.Red);
+        Console.WriteLine();
+        CustomConsole.WriteLine($"Lv.{GameManager.Instance.Player.Level} {GameManager.Instance.Player.Name}");
+        CustomConsole.WriteLine($"Hp {PlayerOriginalHp} -> {GameManager.Instance.Player.Hp}");
+        Console.WriteLine();
+        CustomConsole.WriteLine("0. 다음");
+        Console.WriteLine();
+
+        switch (CustomConsole.PromptMenuChoice(0, 0))
+        {
+            case 0:
+                Main.Instance.PrintScene();
+                break;
+        }
+    }
+
+    private static void Init()
+    {
+        GameManager.Instance.IsScene = "battle";
     }
 }

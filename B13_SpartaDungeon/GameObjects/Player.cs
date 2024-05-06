@@ -25,10 +25,10 @@ public class Player
         Gold = gold;
     }
 
-    public void Hit(ref List<Monster> targetMonster, int targetMonsterNumber)
+    public void Hit(ref List<Monster> targetMonster, int targetMonsterIndex, ref int playerAttackDamage)
     {
         var attackDamage = GetPlayerAttackDamage();
-        var monster = targetMonster[targetMonsterNumber - 1];
+        var monster = targetMonster[targetMonsterIndex - 1];
         if (monster.Hp - attackDamage <= 0)
         {
             monster.Hp = 0;
@@ -38,7 +38,8 @@ public class Player
         {
             monster.Hp -= attackDamage;
         }
-        targetMonster[targetMonsterNumber - 1] = monster;
+        targetMonster[targetMonsterIndex - 1] = monster;
+        playerAttackDamage = attackDamage;
     }
 
     public string GetInfo()

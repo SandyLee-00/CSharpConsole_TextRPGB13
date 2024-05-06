@@ -1,3 +1,6 @@
+using B13_SpartaDungeon.Manager;
+using B13_SpartaDungeon.Scene;
+
 namespace B13_SpartaDungeon.Util;
 
 public static class CustomConsole
@@ -45,10 +48,10 @@ public static class CustomConsole
         Console.ForegroundColor = COLOR_PRIMARY;
     }
 
-    public static void WriteLine()
-    {
-        Console.WriteLine();
-    }
+    // public static void WriteLine()
+    // {
+    //     Console.WriteLine();
+    // }
 
     public static void WriteLine(int content)
     {
@@ -119,56 +122,82 @@ public static class CustomConsole
         Console.SetCursorPosition(0, currentLineCursor);
     }
 
-    public static int PromptMenuChoice(int min, int max)
+
+    //Todo: 선택키 연속으로 눌렀을 때, 사전에 출력되는 현상 => 화면이 생성될 때 입력을 막아야 함 
+    public static int PromptMenuChoice(int min, int max, string message = ChoiceMessage.BASIC)
     {
+        var errorChoiceCount = 0;
         var errorCount = 0;
         var isInputError = false;
 
-        Console.WriteLine("원하시는 행동을 입력해주세요.");
-
+        Console.WriteLine(message);
         while (true)
         {
-            var input = Console.ReadKey(true).KeyChar.ToString();
-            if (int.TryParse(input, out var choice)
-                && choice >= min && choice <= max)
+            if (Console.KeyAvailable)
             {
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
-                return choice;
-            }
+                var input = Console.ReadKey(true).KeyChar.ToString();
+                if (int.TryParse(input, out var choice) && choice >= min && choice <= max)
+                {
+                    #region 죽은 몬스터 선택 시 에러 문구 출력
 
-            if (isInputError || errorCount++ >= 1) continue;
-            isInputError = true;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(' ');
-            Console.SetCursorPosition(0, Console.CursorTop - 2);
-            Console.WriteLine();
-            WriteWithColor(AlertMessage.ERROR_INPUT + AlertMessage.BLANK_LINE_COVER, COLOR_ERROR);
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.SetCursorPosition(0, Console.CursorTop);
+                    if (GameManager.Instance.IsScene == "battle" && Battle.Instance.IsBattleStart && choice != 0 &&
+                        Battle.Instance.RandomMonsters[choice - 1].IsAlive == false)
+                    {
+                        if (errorChoiceCount++ > 0) continue;
+                        PrintAlertMessage(AlertMessages.ERROR_INPUT);
+                        continue;
+                    }
+
+                    #endregion
+
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    return choice;
+                }
+
+                #region 선택지 외에 선택 시 에러 문구 출력
+
+                if (isInputError || errorCount++ > 0 || errorChoiceCount > 0) continue;
+                isInputError = true;
+
+                PrintAlertMessage(AlertMessages.ERROR_INPUT);
+
+                #endregion
+            }
+            Thread.Sleep(100);
         }
     }
 
-    //Todo: 선택키 연속으로 눌렀을 때, 오랫동안 반복되는 현상
-    public static void TwinkleWriteLine(string content, ConsoleColor originalColor, int twinkleCount = 3)
+    private static void PrintAlertMessage(string alertMessage, string choiceMessage = ChoiceMessage.BASIC)
     {
-        var colors = new List<ConsoleColor>
-        {
-            originalColor,
-            ConsoleColor.DarkYellow,
-        };
-
-        for (var i = 0; i < twinkleCount; i++)
-        {
-            foreach (var color in colors)
-            {
-                WriteLineWithColor(content, color);
-                Thread.Sleep(200);
-                Clear();
-            }
-        }
-        WriteLineWithColor(content, originalColor);
+        Console.SetCursorPosition(0, Console.CursorTop);
+        Console.Write(' ');
+        Console.SetCursorPosition(0, Console.CursorTop - 2);
+        Console.WriteLine();
+        WriteWithColor(alertMessage + AlertMessages.BLANK_LINE_COVER, COLOR_ERROR);
+        Console.WriteLine();
+        Console.WriteLine(choiceMessage);
+        Console.SetCursorPosition(0, Console.CursorTop);
     }
+
+    // public static void TwinkleWriteLine(string content, ConsoleColor originalColor, int twinkleCount = 3)
+    // {
+    //     var colors = new List<ConsoleColor>
+    //     {
+    //         originalColor,
+    //         ConsoleColor.DarkYellow,
+    //     };
+    //
+    //     for (var i = 0; i < twinkleCount; i++)
+    //     {
+    //         foreach (var color in colors)
+    //         {
+    //             WriteLineWithColor(content, color);
+    //             Thread.Sleep(200);
+    //             Clear();
+    //         }
+    //     }
+    //     WriteLineWithColor(content, originalColor);
+    // }
 
     public static void Clear()
     {

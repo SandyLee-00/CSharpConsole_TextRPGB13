@@ -61,10 +61,6 @@ public struct Monster
         {
             switch (Battle.Instance.IsBattleStart)
             {
-                case false when Battle.Instance.IsBattleAttemptCount == 0:
-                    CustomConsole.WriteLine(monster.GetInfo());
-                    Thread.Sleep(250);
-                    break;
                 case true when Battle.Instance.IsBattleAttemptCount > 0:
                     if (monster.IsAlive)
                     {
@@ -89,5 +85,10 @@ public struct Monster
             }
         }
         Battle.Instance.IsBattleAttemptCount++;
+    }
+
+    public void Hit(Player player)
+    {
+        player.Hp -= Attack;
     }
 }
