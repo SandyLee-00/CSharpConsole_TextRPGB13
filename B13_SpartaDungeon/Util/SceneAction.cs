@@ -10,17 +10,17 @@ public static class SceneAction
     public static readonly Dictionary<int, Action> MainActions = new()
     {
         [1] = () => PlayerStatus.Instance.PrintScene(),
-        [2] = () => Battle.Instance.PrintScene(),
+        [2] = () =>
+        {
+            Battle.Instance.PlayerOriginalHp = GameManager.Instance.Player.Hp;
+            Battle.Instance.PrintScene();
+        },
     };
 
     // 캐릭터 정보 선택지 액션
     public static readonly Dictionary<int, Action> PlayerStatusActions = new()
     {
-        [0] = () =>
-        {
-            Battle.Instance.PlayerOriginalHp = GameManager.Instance.Player.Hp;
-            Main.Instance.PrintScene();
-        },
+        [0] = () => Main.Instance.PrintScene(),
     };
 
     // 전투 선택지 액션

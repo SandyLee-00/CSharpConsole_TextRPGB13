@@ -48,7 +48,7 @@ public struct Monster
         for (var i = 0; i < randomLoopCount; i++)
         {
             // 순서 랜덤 표시
-            var randomIndex = random.Next(0, 3);
+            var randomIndex = random.Next(0, GameManager.Instance.Monster.Count);
             randomMonsters.Add(GameManager.Instance.Monster[randomIndex]);
         }
         return randomMonsters;
