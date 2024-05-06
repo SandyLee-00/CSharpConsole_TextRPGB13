@@ -1,21 +1,21 @@
-using B13_SpartaDungeon.Interfaces;
 using B13_SpartaDungeon.Manager;
+using B13_SpartaDungeon.Scene.Interfaces;
 using B13_SpartaDungeon.Util;
 
-namespace B13_SpartaDungeon;
+namespace B13_SpartaDungeon.Scene;
 
-public sealed class PlayerStatus : IMenu
+public sealed class PlayerStatus : IScene
 {
     public static PlayerStatus Instance { get; } = new();
 
-    public void PrintMenu()
+    public void PrintScene()
     {
         var player = GameManager.Instance.Player;
 
-        #region 플레이어 정보 출력 부분
+        #region 플레이어 정보 씬 출력 부분
 
-        Console.Clear();
-        CustomConsole.WriteWithColor("상태 보기", CustomConsole.TITLE_COLOR);
+        CustomConsole.ClearVisibleRegion();
+        CustomConsole.WriteLineWithColor("상태 보기", CustomConsole.COLOR_TITLE);
         Console.WriteLine("캐릭터의 정보가 표시됩니다.");
         Console.WriteLine();
 

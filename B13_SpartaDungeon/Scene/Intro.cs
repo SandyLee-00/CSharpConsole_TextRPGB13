@@ -1,10 +1,11 @@
-namespace B13_SpartaDungeon;
+namespace B13_SpartaDungeon.Scene;
 
 public static class Intro
 {
     // 원활한 테스트를 위해 프로젝트 마무리 단계에서 호출 추가
     public static void PrintGameHeader()
     {
+        Console.CursorVisible = false;
         Console.WriteLine("⣿⣿⣿⣿⣿⣿⣿⣿⡄⡀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⢣⣾⣿⣿⣿⣿⣿⣿⣿⣿");
         Console.WriteLine("⣿⣿⣿⣿⣿⣿⣟⠦⠀⢹⣀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠉⠀⠀⠀⠈⠙⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠋⠠⢚⣿⣿⣿⣿⣿⣿⣿");
         Console.WriteLine("⣿⣿⣿⣿⣿⣿⣿⣷⡄⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠁⠀⠀⠀⣀⣤⡶⣦⣄⠀⠀⠀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣴⣿⣿⣿⣿⣿⣿⣿⣿");
@@ -44,6 +45,5 @@ public static class Intro
         Console.WriteLine(" ⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⣀⠒⠀⠀⠀⠀⠀⠀⠀⠉⠉⠙⠛⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
 
         Console.ReadKey(true);
-        Console.Clear();
     }
 }

@@ -7,7 +7,7 @@ public class Monster
 {
     public int Id { get; set; }
     public int Level { get; set; }
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
     public int MaxHp { get; set; }
     public int Hp { get; set; }
     public bool IsAlive { get; set; }
@@ -39,14 +39,35 @@ public class Monster
     }
 
     // 몬스터 생성
-    public static void Generate()
+    public static List<Monster> GetListByRandom()
     {
-        var randomLoopCount = new Random().Next(1, 5);  // 1~4마리 랜덤으로 생성
+        var randomMonsters = new List<Monster>();
+        var randomLoopCount = new Random().Next(1, 5); // 1~4마리 랜덤으로 생성
         for (var i = 0; i < randomLoopCount; i++)
         {
             // 순서 랜덤 표시
             var randomIndex = new Random().Next(0, 3);
-            CustomConsole.WriteLine(GameManager.Instance.Monster[randomIndex].GetInfo());
+            randomMonsters.Add(GameManager.Instance.Monster[randomIndex]);
+        }
+
+        return randomMonsters;
+    }
+
+    public static void Generate(List<Monster> monsters, bool isAttackPhase)
+    {
+        var count = 0;
+        foreach (var monster in monsters)
+        {
+            if (!isAttackPhase)
+            {
+                CustomConsole.WriteLine(monster.GetInfo());
+                Thread.Sleep(250);
+            }
+            else
+            {
+                CustomConsole.WriteWithColor($"[{++count}] ", ConsoleColor.Green);
+                CustomConsole.WriteLine(monster.GetInfo());
+            }
         }
     }
 }

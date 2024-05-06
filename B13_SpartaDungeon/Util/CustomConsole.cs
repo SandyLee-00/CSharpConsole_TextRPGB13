@@ -2,19 +2,19 @@ namespace B13_SpartaDungeon.Util;
 
 public static class CustomConsole
 {
-    public const ConsoleColor PRIMARY_COLOR = ConsoleColor.White;
-    public const ConsoleColor TITLE_COLOR = ConsoleColor.Red;
-    public const ConsoleColor ERROR_COLOR = ConsoleColor.DarkRed;
-    public const ConsoleColor NUMBER_COLOR = ConsoleColor.DarkMagenta;
-    public const ConsoleColor SIGN_COLOR = ConsoleColor.DarkYellow;
-    public const ConsoleColor MARK_COLOR = ConsoleColor.DarkGray;
-    public const ConsoleColor ALERT_COLOR = ConsoleColor.DarkBlue;
+    public const ConsoleColor COLOR_PRIMARY = ConsoleColor.White;
+    public const ConsoleColor COLOR_TITLE = ConsoleColor.Red;
+    public const ConsoleColor COLOR_ERROR = ConsoleColor.DarkRed;
+    public const ConsoleColor COLOR_NUMBER = ConsoleColor.DarkMagenta;
+    public const ConsoleColor COLOR_SIGN = ConsoleColor.DarkYellow;
+    public const ConsoleColor COLOR_MARK = ConsoleColor.DarkGray;
+    public const ConsoleColor COLOR_ALERT = ConsoleColor.DarkBlue;
 
     public static void Write(int content)
     {
-        Console.ForegroundColor = NUMBER_COLOR;
+        Console.ForegroundColor = COLOR_NUMBER;
         Console.Write(content);
-        Console.ForegroundColor = PRIMARY_COLOR;
+        Console.ForegroundColor = COLOR_PRIMARY;
     }
 
     public static void Write(string content)
@@ -28,21 +28,21 @@ public static class CustomConsole
             }
             Console.ForegroundColor = c switch
             {
-                >= '0' and <= '9' => NUMBER_COLOR,
-                ':' or '.' => MARK_COLOR,
-                '>' or '!' or '|' or '+' or '-' => SIGN_COLOR,
-                _ => PRIMARY_COLOR,
+                >= '0' and <= '9' => COLOR_NUMBER,
+                ':' or '.' => COLOR_MARK,
+                '>' or '!' or '|' or '+' or '-' => COLOR_SIGN,
+                _ => COLOR_PRIMARY,
             };
             Console.Write(c);
-            Console.ForegroundColor = PRIMARY_COLOR;
+            Console.ForegroundColor = COLOR_PRIMARY;
         }
     }
 
     public static void WriteWithColor(string content, ConsoleColor consoleColor)
     {
         Console.ForegroundColor = consoleColor;
-        Console.WriteLine(content);
-        Console.ForegroundColor = PRIMARY_COLOR;
+        Console.Write(content);
+        Console.ForegroundColor = COLOR_PRIMARY;
     }
 
     public static void WriteLine()
@@ -52,9 +52,9 @@ public static class CustomConsole
 
     public static void WriteLine(int content)
     {
-        Console.ForegroundColor = NUMBER_COLOR;
+        Console.ForegroundColor = COLOR_NUMBER;
         Console.WriteLine(content);
-        Console.ForegroundColor = PRIMARY_COLOR;
+        Console.ForegroundColor = COLOR_PRIMARY;
     }
 
     public static void WriteLine(string content)
@@ -68,13 +68,13 @@ public static class CustomConsole
             }
             Console.ForegroundColor = c switch
             {
-                >= '0' and <= '9' => NUMBER_COLOR,
-                ':' or '.' => MARK_COLOR,
-                '>' or '!' or '|' or '+' or '-' => SIGN_COLOR,
-                _ => PRIMARY_COLOR,
+                >= '0' and <= '9' => COLOR_NUMBER,
+                ':' or '.' => COLOR_MARK,
+                '>' or '!' or '|' or '+' or '-' => COLOR_SIGN,
+                _ => COLOR_PRIMARY,
             };
             Console.Write(c);
-            Console.ForegroundColor = PRIMARY_COLOR;
+            Console.ForegroundColor = COLOR_PRIMARY;
         }
         Console.WriteLine();
     }
@@ -83,7 +83,7 @@ public static class CustomConsole
     {
         Console.ForegroundColor = consoleColor;
         Console.WriteLine(content);
-        Console.ForegroundColor = PRIMARY_COLOR;
+        Console.ForegroundColor = COLOR_PRIMARY;
     }
 
     private static int GetPrintableLength(string str)
@@ -111,37 +111,68 @@ public static class CustomConsole
         return str.PadRight(str.Length + padding);
     }
 
-    public static void ConsoleClearByLine(int lineFromBottom)
+    public static void ClearCurrentConsoleLine()
     {
-        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
-        for (var i = 0; i < Console.WindowWidth * lineFromBottom; i++)
-        {
-            Console.Write(' ');
-        }
-        Console.SetCursorPosition(0, Console.CursorTop - lineFromBottom);
+        var currentLineCursor = Console.CursorTop;
+        Console.SetCursorPosition(0, Console.CursorTop);
+        Console.Write(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, currentLineCursor);
     }
 
     public static int PromptMenuChoice(int min, int max)
     {
-        var isInputCorrect = true;
+        var errorCount = 0;
+        var isInputError = false;
+
+        Console.WriteLine("원하시는 행동을 입력해주세요.");
+
         while (true)
         {
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-
-            if (int.TryParse(Console.ReadLine(), out var choice) && choice >= min && choice <= max)
+            var input = Console.ReadKey(true).KeyChar.ToString();
+            if (int.TryParse(input, out var choice)
+                && choice >= min && choice <= max)
             {
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
                 return choice;
             }
 
-            if (isInputCorrect)
-            {
-                isInputCorrect = false;
-                Console.WriteLine();
-            }
-
-            ConsoleClearByLine(3);
-            WriteLineWithColor("잘못된 입력입니다.", ERROR_COLOR);
+            if (isInputError || errorCount++ >= 1) continue;
+            isInputError = true;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(' ');
+            Console.SetCursorPosition(0, Console.CursorTop - 2);
+            Console.WriteLine();
+            WriteWithColor(AlertMessage.ERROR_INPUT + AlertMessage.BLANK_LINE_COVER, COLOR_ERROR);
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.SetCursorPosition(0, Console.CursorTop);
         }
+    }
+
+    //Todo: 선택키 연속으로 눌렀을 때, 오랫동안 반복되는 현상
+    public static void TwinkleWriteLine(string content, ConsoleColor originalColor, int twinkleCount = 3)
+    {
+        var colors = new List<ConsoleColor>
+        {
+            originalColor,
+            ConsoleColor.DarkYellow,
+        };
+
+        for (var i = 0; i < twinkleCount; i++)
+        {
+            foreach (var color in colors)
+            {
+                WriteLineWithColor(content, color);
+                Thread.Sleep(200);
+                ClearVisibleRegion();
+            }
+        }
+        WriteLineWithColor(content, originalColor);
+    }
+
+    public static void ClearVisibleRegion()
+    {
+        Console.Clear();
+        Console.WriteLine("\x1b[3J"); // 누적된 출력 내용 제거
     }
 }

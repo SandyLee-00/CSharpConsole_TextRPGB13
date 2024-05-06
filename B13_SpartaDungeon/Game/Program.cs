@@ -6,7 +6,6 @@ internal static class Program
 {
     private static void Main()
     {
-        // Intro.PrintGameHeader();
         GameManager.StartGame();
     }
 }

@@ -1,4 +1,5 @@
 using B13_SpartaDungeon.GameObjects;
+using B13_SpartaDungeon.Scene;
 
 namespace B13_SpartaDungeon.Manager;
 
@@ -16,17 +17,23 @@ public class GameManager
 
     private void InitializeGame()
     {
-        Player = new Player("B13", "광합성이필요해", 1, 10, 5, 100, 15000);
+        Player = new Player("비십삼", "코딩전사", 1, 10, 5, 100, 1500);
+        MonsterInit();
+    }
+
+    public void MonsterInit()
+    {
         Monster = new List<Monster>
         {
             new(1, 2, "미니언", 15, true, 1),
-            new(2, 5, "대포미니언", 25, true, 2),
+            new(2, 5, "대포 미니언", 25, true, 2),
             new(3, 3, "공허충", 10, true, 5)
         };
     }
 
     public static void StartGame()
     {
-        Lobby.Instance.PrintMenu();
+        // Intro.PrintGameHeader();
+        Lobby.Instance.PrintScene();
     }
 }
