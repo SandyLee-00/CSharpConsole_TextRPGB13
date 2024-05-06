@@ -96,6 +96,8 @@ public class Battle : IScene
         CustomConsole.WriteLine(
             $"HP {RandomMonsters[monsterIndex - 1].Hp + _playerAttackDamage} -> {RandomMonsters[monsterIndex - 1].Hp}");
         Console.WriteLine();
+        CustomConsole.WriteLine("0. 다음");
+        Console.WriteLine();
 
         switch (CustomConsole.PromptMenuChoice(0, 0))
         {
@@ -116,6 +118,8 @@ public class Battle : IScene
             CustomConsole.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
             CustomConsole.Write($"{GameManager.Instance.Player.Name} 을(를) 맞췄습니다.   ");
             CustomConsole.WriteLine($"[데미지: {monster.Attack}]");
+            Console.WriteLine();
+            CustomConsole.WriteLine("0. 다음");
             Console.WriteLine();
 
             switch (CustomConsole.PromptMenuChoice(0, 0))
@@ -140,7 +144,7 @@ public class Battle : IScene
         CustomConsole.WriteLine($"던전에서 몬스터 {RandomMonsters.Count}마리를 잡았습니다.");
         Console.WriteLine();
         CustomConsole.WriteLine($"Lv.{GameManager.Instance.Player.Level} {GameManager.Instance.Player.Name}");
-        CustomConsole.WriteLine($"Hp {PlayerOriginalHp} -> {GameManager.Instance.Player.Name}");
+        CustomConsole.WriteLine($"Hp {PlayerOriginalHp} -> {GameManager.Instance.Player.Hp}");
         Console.WriteLine();
         CustomConsole.WriteLine("0. 다음");
         Console.WriteLine();
