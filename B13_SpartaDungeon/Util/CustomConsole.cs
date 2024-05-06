@@ -164,13 +164,13 @@ public static class CustomConsole
             {
                 WriteLineWithColor(content, color);
                 Thread.Sleep(200);
-                ClearVisibleRegion();
+                Clear();
             }
         }
         WriteLineWithColor(content, originalColor);
     }
 
-    public static void ClearVisibleRegion()
+    public static void Clear()
     {
         Console.Clear();
         Console.WriteLine("\x1b[3J"); // 누적된 출력 내용 제거

@@ -11,22 +11,32 @@ public class Battle : IScene
 
     private List<Monster> _monsters = null!;
 
+    public bool IsBattleStart = false;
+    public int IsBattleAttemptCount;
+
     public void PrintScene()
     {
-        #region 전투 씬 출력 부분
-
-        CustomConsole.ClearVisibleRegion();
-        CustomConsole.TwinkleWriteLine("Battle!!", ConsoleColor.Red);
+        CustomConsole.Clear();
+        if (!IsBattleStart && IsBattleAttemptCount == 0)
+        {
+            CustomConsole.TwinkleWriteLine("Battle!!", ConsoleColor.Red);
+            _monsters = Monster.GetListByRandom();
+        }
+        else
+        {
+            CustomConsole.WriteLineWithColor("Battle!!", ConsoleColor.Red);
+        }
         Console.WriteLine();
 
-        _monsters = Monster.GetListByRandom();
-        Monster.Generate(_monsters, false);
+        Monster.Generate(_monsters);
         Console.WriteLine();
 
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
 
-        #endregion
+        CustomConsole.WriteLine("0. 도망");
+        CustomConsole.WriteLine("1. 공격");
+        Console.WriteLine();
 
         var choice = CustomConsole.PromptMenuChoice(0, 1);
 
@@ -35,25 +45,39 @@ public class Battle : IScene
         Console.WriteLine();
     }
 
-    public void BattlePlayerTurn()
+    public void BattlePlayerTurn(int monsterNumber = 0)
     {
-        #region 전투 씬(플레이어 공격 차례) 출력 부분
-
-        CustomConsole.ClearVisibleRegion();
-        CustomConsole.WriteLineWithColor("Battle!!", ConsoleColor.Red);
+        if (monsterNumber != 0)
+        {
+            GameManager.Instance.Player.Hit(ref _monsters, monsterNumber);
+        }
+        
+        CustomConsole.Clear();
+        CustomConsole.WriteLineWithColor("Battle!! - 플레이어 차례", ConsoleColor.Red);
         Console.WriteLine();
 
-        Monster.Generate(_monsters, true);
+        Monster.Generate(_monsters);
         Console.WriteLine();
 
         Console.WriteLine("[내 정보]");
         CustomConsole.WriteLine(GameManager.Instance.Player.GetInfo());
 
-        #endregion
+        CustomConsole.WriteLine("0. 취소");
+        Console.WriteLine();
 
-        var choice = CustomConsole.PromptMenuChoice(0, 0);
+        if (monsterNumber == 0)
+        {
+            for (var i = 1; i <= _monsters.Count; i++)
+            {
+                var number = i;
+                SceneAction.BattlePlayerTurn[i] = () => BattlePlayerTurn(monsterNumber: number);
+            }
+        }
 
-        SceneAction.BattleActions[choice]();
+
+        var choice = CustomConsole.PromptMenuChoice(0, _monsters.Count);
+
+        SceneAction.BattlePlayerTurn[choice]();
 
         Console.WriteLine();
     }

@@ -14,7 +14,7 @@ public sealed class PlayerStatus : IScene
 
         #region 플레이어 정보 씬 출력 부분
 
-        CustomConsole.ClearVisibleRegion();
+        CustomConsole.Clear();
         CustomConsole.WriteLineWithColor("상태 보기", CustomConsole.COLOR_TITLE);
         Console.WriteLine("캐릭터의 정보가 표시됩니다.");
         Console.WriteLine();
@@ -25,7 +25,7 @@ public sealed class PlayerStatus : IScene
         CustomConsole.WriteLine("방어력: " + player.Defense);
         CustomConsole.WriteLine("체력 : " + player.Hp);
         CustomConsole.WriteLine("Gold: " + player.Gold);
-        CustomConsole.WriteLine();
+        Console.WriteLine();
         CustomConsole.WriteLine("0. 뒤로가기");
         Console.WriteLine();
 

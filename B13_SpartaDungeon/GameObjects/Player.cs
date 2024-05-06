@@ -23,6 +23,21 @@ public class Player
         Gold = gold;
     }
 
+    public void Hit(ref List<Monster> targetMonster, int targetMonsterNumber)
+    {
+        var attackDamage = GetPlayerAttackDamage();
+        var targetMonsterHp = targetMonster[targetMonsterNumber - 1].Hp;
+        if (targetMonsterHp - attackDamage <= 0)
+        {
+            targetMonster[targetMonsterNumber - 1].Hp = 0;
+            targetMonster[targetMonsterNumber - 1].IsAlive = false;
+        }
+        else
+        {
+            targetMonster[targetMonsterNumber - 1].Hp -= attackDamage;
+        }
+    }
+
     public string GetInfo()
     {
         var ret = $"Lv.{Level} {Name} ({Job})\n";
@@ -30,12 +45,11 @@ public class Player
         return ret;
     }
 
-    public int GetPlayerAttackDamage()
+    private int GetPlayerAttackDamage()
     {
         var rand = new Random();
-        var damage = Attack;
-        var diff = rand.NextDouble() * 0.2f - 0.1f;
-        damage = (int)Math.Ceiling(damage + damage * diff);
+        var errorRate = rand.NextDouble() * 0.2f - 0.1f;
+        var damage = (int)Math.Ceiling(Attack + Attack * errorRate);
         return damage;
     }
 }

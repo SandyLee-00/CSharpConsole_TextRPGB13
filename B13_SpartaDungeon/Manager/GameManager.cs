@@ -25,9 +25,9 @@ public class GameManager
     {
         Monster = new List<Monster>
         {
-            new(1, 2, "미니언", 15, true, 1),
-            new(2, 5, "대포 미니언", 25, true, 2),
-            new(3, 3, "공허충", 10, true, 5)
+            new(1, 2, "미니언", 15, 1),
+            new(2, 5, "대포 미니언", 25, 2),
+            new(3, 3, "공허충", 10, 5),
         };
     }
 

@@ -1,4 +1,5 @@
 using B13_SpartaDungeon.Manager;
+using B13_SpartaDungeon.Scene;
 using B13_SpartaDungeon.Util;
 
 namespace B13_SpartaDungeon.GameObjects;
@@ -13,7 +14,7 @@ public class Monster
     public bool IsAlive { get; set; }
     public int Attack { get; }
 
-    public Monster(int id, int level, string name, int maxHp, bool isAlive, int attack)
+    public Monster(int id, int level, string name, int maxHp, int attack, bool isAlive = true)
     {
         Id = id;
         Level = level;
@@ -53,21 +54,40 @@ public class Monster
         return randomMonsters;
     }
 
-    public static void Generate(List<Monster> monsters, bool isAttackPhase)
+    public static void Generate(List<Monster> monsters)
     {
         var count = 0;
         foreach (var monster in monsters)
         {
-            if (!isAttackPhase)
+            switch (Battle.Instance.IsBattleStart)
             {
-                CustomConsole.WriteLine(monster.GetInfo());
-                Thread.Sleep(250);
-            }
-            else
-            {
-                CustomConsole.WriteWithColor($"[{++count}] ", ConsoleColor.Green);
-                CustomConsole.WriteLine(monster.GetInfo());
+                case false when Battle.Instance.IsBattleAttemptCount == 0:
+                    CustomConsole.WriteLine(monster.GetInfo());
+                    Thread.Sleep(250);
+                    break;
+                case true when Battle.Instance.IsBattleAttemptCount > 0:
+                    if (monster.IsAlive)
+                    {
+                        CustomConsole.WriteWithColor($"[{++count}] ", ConsoleColor.Green);
+                        CustomConsole.WriteLine(monster.GetInfo());
+                    }
+                    else
+                    {
+                        CustomConsole.WriteLineWithColor($"[{++count}] {monster.GetInfo()}", ConsoleColor.Gray);
+                    }
+                    break;
+                default:
+                    if (monster.IsAlive)
+                    {
+                        CustomConsole.WriteLine(monster.GetInfo());
+                    }
+                    else
+                    {
+                        CustomConsole.WriteLineWithColor(monster.GetInfo(), ConsoleColor.Gray);
+                    }
+                    break;
             }
         }
+        Battle.Instance.IsBattleAttemptCount++;
     }
 }
