@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TextRPG
@@ -16,7 +17,17 @@ namespace TextRPG
 
         private void InitializeGame()
         {
-            player = new Player("서영", "광합성이필요해", 1, 10, 5, 100, 15000);
+            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            Console.WriteLine("캐릭터의 이름과 직업을 입력해주세요.");
+            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("");
+
+            Console.Write("캐릭터의 이름을 입력하세요: ");
+            string playerName = Console.ReadLine();
+            Console.Write("캐릭터의 직업을 입력하세요: ");
+            string playerJob = Console.ReadLine();
+            player = new Player(playerName, playerJob, 1, 10, 5, 100, 15000);
             monsters = new List<Monster>()
             {
                 new Monster(1, 10, "B반 미카엘 대천사 혁매", 10, true, 5),
@@ -129,7 +140,6 @@ namespace TextRPG
             Console.Clear();
             Utility.ShowTitle("■ Battle!! 3 - 1. 공격 ■");
             Console.WriteLine("");
-
             int count = 1;
 
             foreach (Monster monster in monsters)
@@ -243,7 +253,6 @@ namespace TextRPG
 
                     break;
             }
-
         }
 
         public void BattleMonsterAttack(Monster monster)
@@ -363,6 +372,6 @@ HP 100 -> 74
         {
             GameManager gameManager = new GameManager();
             gameManager.StartGame();
-            }
         }
     }
+}
