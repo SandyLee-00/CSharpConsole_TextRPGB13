@@ -116,16 +116,15 @@ public class Player
         return damage;
     }
 
-    public static void RecoverMp()
+    public static void RecoverMp(int recoveryNumber = 10)
     {
-        // 마나 10 회복
-        if (GameManager.Instance.Player.Mp + 10 < GameManager.Instance.Player.MaxMp)
+        if (GameManager.Instance.Player.Mp + recoveryNumber < GameManager.Instance.Player.MaxMp)
         {
-            GameManager.Instance.Player.Mp += 10;
+            GameManager.Instance.Player.Mp += recoveryNumber;
         }
         else
         {
-            GameManager.Instance.Player.Mp = 50;
+            GameManager.Instance.Player.Mp = GameManager.Instance.Player.MaxMp;
         }
     }
 }
