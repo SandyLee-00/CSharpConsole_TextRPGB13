@@ -90,11 +90,11 @@ public class Player
         var prob = random.NextDouble();
         if (prob <= 0.15f)
         {
-            playerAttackDamage = attackDamage;
+            playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f);
         }
         else
         {
-            playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f);
+            playerAttackDamage = attackDamage;
         }
     }
 
