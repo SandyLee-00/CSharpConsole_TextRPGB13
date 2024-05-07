@@ -88,14 +88,13 @@ public class Player
         // 15% 확률로 치명타 발생 => 160% 데미지
         var random = new Random();
         var prob = random.NextDouble();
-        if (prob <= 0.15f)
+
+        playerAttackDamage = prob switch
         {
-            playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f);
-        }
-        else
-        {
-            playerAttackDamage = attackDamage;
-        }
+            <= 0.15f => playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f),
+            >= 0.9f and <= 1.0f => playerAttackDamage = 0,
+            _ => playerAttackDamage = attackDamage,
+        };
     }
 
     public string GetInfo()

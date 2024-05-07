@@ -84,17 +84,27 @@ public class Battle : IScene
 
     private void PlayerAttackInfo(int monsterIndex)
     {
+        var monster = RandomMonsters[monsterIndex - 1];
         CustomConsole.Clear();
         CustomConsole.WriteLineWithColor("Battle!! - 플레이어 공격 정보", CustomConsole.COLOR_TITLE);
         Console.WriteLine();
+
         CustomConsole.WriteLine($"{GameManager.Instance.Player.Name} 의 공격!");
-        CustomConsole.Write(
-            $"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name} 을(를) 맞췄습니다.   ");
-        CustomConsole.WriteLine($"[데미지: {_playerAttackDamage}]");
-        Console.WriteLine();
-        CustomConsole.WriteLine($"Lv.{RandomMonsters[monsterIndex - 1].Level} {RandomMonsters[monsterIndex - 1].Name}");
-        CustomConsole.WriteLine(
-            $"HP {RandomMonsters[monsterIndex - 1].Hp + _playerAttackDamage} -> {RandomMonsters[monsterIndex - 1].Hp}");
+        if (_playerAttackDamage > 0)
+        {
+            CustomConsole.Write(
+                $"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.   ");
+            CustomConsole.WriteLine($"[데미지: {_playerAttackDamage}]");
+            Console.WriteLine();
+            CustomConsole.WriteLine(
+                $"Lv.{monster.Level} {monster.Name}");
+            CustomConsole.WriteLine(
+                $"HP {monster.Hp + _playerAttackDamage} -> {monster.Hp}");
+        }
+        else
+        {
+            CustomConsole.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+        }
         Console.WriteLine();
         CustomConsole.WriteLine("0. 다음");
         Console.WriteLine();
