@@ -1,6 +1,5 @@
 using B13_SpartaDungeon.GameObjects;
 using B13_SpartaDungeon.Scene;
-using B13_SpartaDungeon.Util;
 
 namespace B13_SpartaDungeon.Manager;
 
@@ -11,9 +10,6 @@ public class GameManager
     public Player Player = null!;
     public List<Monster> Monster = null!;
 
-    private const string DEFAULT_NAME = "르탄이";
-    private string _name = DEFAULT_NAME;
-
     public string IsScene = "";
 
     private GameManager()
@@ -23,7 +19,7 @@ public class GameManager
 
     private void InitializeGame()
     {
-        Player = new Player(_name, "전사", 1, 10, 5, 100, 1500);
+        Player = new Player("르탄이", Job.전사, 1, 10, 5, 100, 1500);
         MonsterInit();
     }
 
@@ -40,19 +36,11 @@ public class GameManager
         };
     }
 
-    private static void EditPlayerName()
-    {
-        CustomConsole.Clear();
-        CustomConsole.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
-        CustomConsole.WriteLine("원하시는 이름을 설정해주세요.");
-        CustomConsole.Write(">> ");
-        Instance.Player.Name = Console.ReadLine() ?? DEFAULT_NAME;
-    }
-
     public static void StartGame()
     {
         Intro.PrintGameHeader();
-        EditPlayerName();
+        Player.EditPlayerName();
+        Player.EditPlayerJob();
         Main.Instance.PrintScene();
     }
 }
