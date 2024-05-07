@@ -94,7 +94,16 @@ public class Battle : IScene
         {
             CustomConsole.Write(
                 $"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.   ");
-            CustomConsole.WriteLine($"[데미지: {_playerAttackDamage}]");
+            CustomConsole.Write($"[데미지: {_playerAttackDamage}]");
+            if (_playerAttackDamage > _playerAttackDamage * 1.2f)
+            {
+                CustomConsole.Write(" - 치명타 공격!!");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+            }
             Console.WriteLine();
             CustomConsole.WriteLine(
                 $"Lv.{monster.Level} {monster.Name}");

@@ -19,13 +19,15 @@ public class Player
     public int Attack { get; }
     public int Defense { get; }
     public int MaxHp { get; }
+    public int MaxMp { get; }
     public int Hp { get; set; }
+    public int Mp { get; set; }
     public int Gold { get; set; }
     public int VictoryCount { get; set; }
 
     private const string DEFAULT_NAME = "르탄이";
 
-    public Player(string name, Job job, int level, int attack, int defense, int maxHp, int gold,
+    public Player(string name, Job job, int level, int attack, int defense, int maxHp, int maxMp, int gold,
         int victoryCount = 0)
     {
         Name = name;
@@ -34,7 +36,9 @@ public class Player
         Attack = attack;
         Defense = defense;
         MaxHp = maxHp;
+        MaxMp = maxMp;
         Hp = maxHp;
+        Mp = maxMp;
         Gold = gold;
         VictoryCount = victoryCount;
     }
@@ -84,15 +88,14 @@ public class Player
             monster.Hp -= attackDamage;
         }
         targetMonster[targetMonsterIndex - 1] = monster;
-
-        // 15% 확률로 치명타 발생 => 160% 데미지
+        
         var random = new Random();
         var prob = random.NextDouble();
 
         playerAttackDamage = prob switch
         {
-            <= 0.15f => playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f),
-            >= 0.9f and <= 1.0f => playerAttackDamage = 0,
+            <= 0.15f => playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f),    // 15% 확률로 치명타 발생 => 160% 데미지
+            >= 0.9f and <= 1.0f => playerAttackDamage = 0,  // 10% 확률로 공격 무효 => 몬스터 회피
             _ => playerAttackDamage = attackDamage,
         };
     }

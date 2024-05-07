@@ -26,6 +26,7 @@ public sealed class PlayerStatus : IScene
         CustomConsole.WriteLine("공격력: " + _player.Attack);
         CustomConsole.WriteLine("방어력: " + _player.Defense);
         CustomConsole.WriteLine("체력 : " + _player.Hp);
+        CustomConsole.WriteLine("마나 : " + _player.Mp);
         CustomConsole.WriteLine("Gold: " + _player.Gold);
         Console.WriteLine();
         CustomConsole.WriteLine("전투 승리 수: " + _player.VictoryCount);

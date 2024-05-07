@@ -19,7 +19,7 @@ public class GameManager
 
     private void InitializeGame()
     {
-        Player = new Player("르탄이", Job.전사, 1, 10, 5, 100, 1500);
+        Player = new Player("르탄이", Job.전사, 1, 10, 5, 100,  50, 1500);
         MonsterInit();
     }
 
