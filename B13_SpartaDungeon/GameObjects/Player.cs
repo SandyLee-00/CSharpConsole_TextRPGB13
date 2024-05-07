@@ -8,7 +8,7 @@ public enum Job
     전사,
     법사,
     궁수,
-    닌자
+    닌자,
 }
 
 public class Player
@@ -84,7 +84,18 @@ public class Player
             monster.Hp -= attackDamage;
         }
         targetMonster[targetMonsterIndex - 1] = monster;
-        playerAttackDamage = attackDamage;
+
+        // 15% 확률로 치명타 발생 => 160% 데미지
+        var random = new Random();
+        var prob = random.NextDouble();
+        if (prob <= 0.15f)
+        {
+            playerAttackDamage = attackDamage;
+        }
+        else
+        {
+            playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f);
+        }
     }
 
     public string GetInfo()
