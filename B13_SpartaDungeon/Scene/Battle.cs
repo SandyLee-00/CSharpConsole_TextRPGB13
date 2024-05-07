@@ -155,7 +155,6 @@ public class Battle : IScene
 
     public void BattleResultPlayerWin()
     {
-        GameManager.Instance.Player.VictoryCount++;
         CustomConsole.Clear();
         CustomConsole.WriteLineWithColor("Battle!! - Result", CustomConsole.COLOR_TITLE);
         Console.WriteLine();
@@ -169,9 +168,12 @@ public class Battle : IScene
         CustomConsole.WriteLine("0. 다음");
         Console.WriteLine();
 
+        GameManager.Instance.Player.VictoryCount++;
+
         switch (CustomConsole.PromptMenuChoice(0, 0))
         {
             case 0:
+                Player.RecoverMp();
                 Main.Instance.PrintScene();
                 break;
         }
@@ -193,6 +195,7 @@ public class Battle : IScene
         switch (CustomConsole.PromptMenuChoice(0, 0))
         {
             case 0:
+                Player.RecoverMp();
                 Main.Instance.PrintScene();
                 break;
         }

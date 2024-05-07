@@ -88,14 +88,14 @@ public class Player
             monster.Hp -= attackDamage;
         }
         targetMonster[targetMonsterIndex - 1] = monster;
-        
+
         var random = new Random();
         var prob = random.NextDouble();
 
         playerAttackDamage = prob switch
         {
-            <= 0.15f => playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f),    // 15% 확률로 치명타 발생 => 160% 데미지
-            >= 0.9f and <= 1.0f => playerAttackDamage = 0,  // 10% 확률로 공격 무효 => 몬스터 회피
+            <= 0.15f => playerAttackDamage = (int)Math.Ceiling(attackDamage * 1.6f), // 15% 확률로 치명타 발생 => 160% 데미지
+            >= 0.9f and <= 1.0f => playerAttackDamage = 0, // 10% 확률로 공격 무효 => 몬스터 회피
             _ => playerAttackDamage = attackDamage,
         };
     }
@@ -104,6 +104,7 @@ public class Player
     {
         var ret = $"Lv.{Level} {Name} ({Job})\n";
         ret += $"HP : {Hp} / {MaxHp}\n";
+        ret += $"MP : {Mp} / {MaxMp}\n";
         return ret;
     }
 
@@ -113,5 +114,18 @@ public class Player
         var errorRate = rand.NextDouble() * 0.2f - 0.1f;
         var damage = (int)Math.Ceiling(Attack + Attack * errorRate);
         return damage;
+    }
+
+    public static void RecoverMp()
+    {
+        // 마나 10 회복
+        if (GameManager.Instance.Player.Mp + 10 < GameManager.Instance.Player.MaxMp)
+        {
+            GameManager.Instance.Player.Mp += 10;
+        }
+        else
+        {
+            GameManager.Instance.Player.Mp = 50;
+        }
     }
 }
