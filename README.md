@@ -23,10 +23,10 @@ C#을 활용하여 텍스트를 기반으로 한 RPG 게임를 구현하였습�
 
 ## **🧑‍🤝‍🧑** 개발자 소개
 
-- 권용 : 팀장, 발표 ( https://github.com/cLOfLuV )
+- 권용 : 팀장, 발표 (+ 공동 구현) ( https://github.com/cLOfLuV )
 - 윤낙원 : 공동 구현  ( https://github.com/nakwony )
 - 이서영 : 공동 구현  ( https://github.com/SandyLee-00 )
-- 정지효 : 팀 노션 관리, README  ( https://github.com/Jihyo3 )
+- 정지효 : 팀 노션 관리, README (+ 공동 구현 ) ( https://github.com/Jihyo3 )
 
 ---
 
